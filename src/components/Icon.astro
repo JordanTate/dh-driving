@@ -1,0 +1,49 @@
+---
+import {
+	BadgeCheck,
+	BookOpen,
+	CarFront,
+	Clock3,
+	GraduationCap,
+	Phone,
+	ShieldCheck,
+	Star,
+} from '@lucide/astro';
+
+export type SiteIconName =
+	| 'badge-check'
+	| 'book-open'
+	| 'car-front'
+	| 'clock'
+	| 'instructor'
+	| 'phone'
+	| 'shield'
+	| 'star';
+
+type Props = {
+	name?: SiteIconName | null;
+	class?: string;
+	strokeWidth?: number;
+};
+
+const {
+	name,
+	class: className = 'h-5 w-5',
+	strokeWidth = 2,
+} = Astro.props as Props;
+
+const icons = {
+	'badge-check': BadgeCheck,
+	'book-open': BookOpen,
+	'car-front': CarFront,
+	clock: Clock3,
+	instructor: GraduationCap,
+	phone: Phone,
+	shield: ShieldCheck,
+	star: Star,
+} as const;
+
+const IconComponent = name ? icons[name] : null;
+---
+
+{IconComponent && <IconComponent class={className} stroke-width={strokeWidth} aria-hidden="true" />}
