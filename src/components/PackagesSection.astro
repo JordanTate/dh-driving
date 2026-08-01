@@ -1,0 +1,92 @@
+---
+import Icon from './Icon.astro';
+import type { SiteIconName } from './Icon.astro';
+
+type PackageCard = {
+	icon?: SiteIconName | null;
+	title: string;
+	price: string;
+	detail?: string | null;
+	ctaLabel?: string | null;
+	ctaHref?: string | null;
+	featured?: boolean;
+};
+
+type Props = {
+	eyebrow?: string | null;
+	title?: string | null;
+	description?: string | null;
+	packages?: PackageCard[] | null;
+};
+
+const {
+	eyebrow,
+	title,
+	description,
+	packages = [],
+} = Astro.props as Props;
+---
+
+{Array.isArray(packages) && packages.length > 0 && (
+	<section class="bg-slate-50 py-16 sm:py-20">
+		<div class="mx-auto w-full max-w-6xl px-4 sm:px-6 lg:px-8">
+			<div class="max-w-2xl">
+				{eyebrow && (
+					<p class="mb-3 text-xs font-semibold uppercase tracking-[0.35em] text-red-600">
+						{eyebrow}
+					</p>
+				)}
+				{title && <h2 class="text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">{title}</h2>}
+				{description && <p class="mt-4 text-base leading-7 text-slate-600 sm:text-lg">{description}</p>}
+			</div>
+
+			<div class="mt-10 grid gap-6 lg:grid-cols-3">
+				{
+					packages.map((pkg) => {
+						const hasCta = Boolean(pkg.ctaLabel && pkg.ctaHref);
+
+						return (
+							<article class:list={[
+								'relative flex h-full flex-col justify-between rounded-3xl border bg-white p-6 shadow-sm transition',
+								pkg.featured
+									? 'border-red-500 shadow-red-100/80 ring-1 ring-red-200'
+									: 'border-slate-200 hover:border-slate-300',
+							]}>
+
+								{pkg.featured && (
+									<span class="absolute right-5 top-5 rounded-full bg-red-600 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.2em] text-white">
+										Most Popular
+									</span>
+								)}
+
+                <div>
+                  <div class="inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-red-50 text-red-600">
+                    <Icon name={pkg.icon ?? 'badge-check'} class="h-6 w-6" />
+                  </div>
+
+                  <h3 class="mt-6 text-xl font-semibold text-slate-900">{pkg.title}</h3>
+                  <p class="mt-3 text-3xl font-bold tracking-tight text-slate-900">{pkg.price}</p>
+                  {pkg.detail && <p class="mt-3 text-sm leading-6 text-slate-600">{pkg.detail}</p>}
+                </div>
+
+								{hasCta && (
+									<a
+										href={pkg.ctaHref as string}
+										class:list={[
+											'mt-6 flex items-center justify-center rounded-lg border px-5 py-3 text-sm font-semibold transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-500 focus-visible:ring-offset-2',
+											pkg.featured
+												? 'border-red-600 bg-red-600 text-white hover:bg-red-700'
+												: 'border-slate-300 text-slate-900 hover:border-red-400 hover:text-red-600',
+										]}
+									>
+										{pkg.ctaLabel}
+									</a>
+								)}
+							</article>
+						);
+					})
+				}
+			</div>
+		</div>
+	</section>
+)}

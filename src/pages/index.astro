@@ -1,8 +1,11 @@
 ---
-import Welcome from '../components/Welcome.astro';
+import Hero from '../components/Hero.astro';
+import PackagesSection from '../components/PackagesSection.astro';
 import Layout from '../layouts/Layout.astro';
+import { heroDefaults, packageSectionDefaults } from '../constants/site';
 ---
 
 <Layout>
-	<Welcome />
+	<Hero {...heroDefaults} />
+	<PackagesSection {...packageSectionDefaults} />
 </Layout>
