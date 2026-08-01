@@ -1,0 +1,103 @@
+---
+import Icon from './Icon.astro';
+
+type Props = {
+	ariaLabel: string;
+};
+
+const { ariaLabel } = Astro.props as Props;
+---
+
+<site-carousel class="block">
+	<div
+		data-carousel-track
+		aria-label={ariaLabel}
+		class="flex snap-x snap-mandatory gap-6 overflow-x-auto scroll-smooth pb-2 scrollbar-none [&::-webkit-scrollbar]:hidden"
+	>
+		<slot />
+	</div>
+
+	<div class="mt-6 flex items-center justify-end gap-3">
+		<button
+			type="button"
+			data-carousel-prev
+			class="inline-flex h-11 w-11 items-center justify-center rounded-full border border-slate-300 bg-white text-slate-700 transition hover:border-slate-400 hover:text-slate-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-500 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-40"
+			aria-label="Previous reviews"
+		>
+			<Icon name="chevron-left" class="h-5 w-5" />
+		</button>
+		<button
+			type="button"
+			data-carousel-next
+			class="inline-flex h-11 w-11 items-center justify-center rounded-full border border-slate-300 bg-white text-slate-700 transition hover:border-slate-400 hover:text-slate-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-500 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-40"
+			aria-label="Next reviews"
+		>
+			<Icon name="chevron-right" class="h-5 w-5" />
+		</button>
+	</div>
+</site-carousel>
+
+<script>
+	class SiteCarousel extends HTMLElement {
+		track: HTMLElement | null = null;
+		prevButton: HTMLButtonElement | null = null;
+		nextButton: HTMLButtonElement | null = null;
+		boundUpdateButtons: () => void = () => {};
+		boundResize: () => void = () => {};
+
+		connectedCallback() {
+			this.track = this.querySelector('[data-carousel-track]');
+			this.prevButton = this.querySelector('[data-carousel-prev]');
+			this.nextButton = this.querySelector('[data-carousel-next]');
+
+			if (!this.track || !this.prevButton || !this.nextButton) {
+				return;
+			}
+
+			this.boundUpdateButtons = this.updateButtons.bind(this);
+			this.boundResize = this.handleResize.bind(this);
+
+			this.prevButton.addEventListener('click', () => this.scrollByPage(-1));
+			this.nextButton.addEventListener('click', () => this.scrollByPage(1));
+			this.track.addEventListener('scroll', this.boundUpdateButtons, { passive: true });
+			window.addEventListener('resize', this.boundResize);
+
+			this.updateButtons();
+		}
+
+		disconnectedCallback() {
+			if (this.track) {
+				this.track.removeEventListener('scroll', this.boundUpdateButtons);
+			}
+			window.removeEventListener('resize', this.boundResize);
+		}
+
+		handleResize() {
+			this.updateButtons();
+		}
+
+		scrollByPage(direction: number) {
+			if (!this.track) {
+				return;
+			}
+
+			this.track.scrollBy({ left: direction * this.track.clientWidth, behavior: 'smooth' });
+		}
+
+		updateButtons() {
+			if (!this.track || !this.prevButton || !this.nextButton) {
+				return;
+			}
+
+			const maxScrollLeft = this.track.scrollWidth - this.track.clientWidth;
+			const currentScrollLeft = this.track.scrollLeft;
+
+			this.prevButton.disabled = currentScrollLeft <= 8;
+			this.nextButton.disabled = currentScrollLeft >= maxScrollLeft - 8;
+		}
+	}
+
+	if (!customElements.get('site-carousel')) {
+		customElements.define('site-carousel', SiteCarousel);
+	}
+</script>
