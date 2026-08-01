@@ -1,11 +1,15 @@
 ---
 import Hero from '../components/Hero.astro';
 import PackagesSection from '../components/PackagesSection.astro';
+import ReviewsSection from '../components/ReviewsSection.astro';
+import UspStrip from '../components/UspStrip.astro';
 import Layout from '../layouts/Layout.astro';
-import { heroDefaults, packageSectionDefaults } from '../constants/site';
+import { heroDefaults, packageSectionDefaults, reviewSectionDefaults, uspStripDefaults } from '../constants/site';
 ---
 
 <Layout>
 	<Hero {...heroDefaults} />
 	<PackagesSection {...packageSectionDefaults} />
+	<ReviewsSection {...reviewSectionDefaults} />
+	<UspStrip items={uspStripDefaults} />
 </Layout>
