@@ -1,5 +1,6 @@
 ---
 import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
 import '../styles/global.css';
 import { siteBrand } from '../constants/site';
 ---
@@ -17,6 +18,7 @@ import { siteBrand } from '../constants/site';
 	<body class="overflow-x-hidden">
 		<Nav />
 		<slot />
+		<Footer />
 	</body>
 </html>
 

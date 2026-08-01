@@ -43,6 +43,10 @@ export const siteContact = {
     label: 'hello@drivingschool.com',
     href: 'mailto:hello@drivingschool.com',
   },
+  whatsapp: {
+    label: 'Text on WhatsApp',
+    href: 'https://wa.me/15551234567',
+  },
 } as const;
 
 export const siteNavigation = [
@@ -162,4 +166,15 @@ export const reviewSectionDefaults = {
       text: 'Flexible scheduling was a huge plus, and the lessons themselves were excellent value for money.',
     },
   ] as ReviewItem[],
+} as const;
+
+export const footerDefaults = {
+  title: 'Ready to get started?',
+  subtitle: 'Book your first lesson today.',
+  text: 'Reach out by phone or WhatsApp and we will find a lesson slot that fits your schedule.',
+  callLabel: 'Call Now',
+  callHref: siteContact.phone.href,
+  whatsappLabel: siteContact.whatsapp.label,
+  whatsappHref: siteContact.whatsapp.href,
+  image: null as { src: string; alt: string } | null,
 } as const;
