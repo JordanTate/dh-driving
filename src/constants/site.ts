@@ -17,6 +17,17 @@ type PackageCard = {
   featured?: boolean;
 };
 
+type UspStripItem = {
+  text: string;
+  icon?: SiteIconName;
+};
+
+type ReviewItem = {
+  name: string;
+  location: string;
+  text: string;
+};
+
 export const siteBrand = {
   name: 'Driving School',
   logoLabel: 'Driving School',
@@ -106,4 +117,49 @@ export const packageSectionDefaults = {
       featured: false,
     },
   ] as PackageCard[],
+} as const;
+
+export const uspStripDefaults = [
+  { text: 'Patient, friendly & professional', icon: 'badge-check' },
+  { text: 'Learn in a modern, dual control car', icon: 'badge-check' },
+  { text: 'High first-time pass rate', icon: 'badge-check' },
+] as UspStripItem[];
+
+export const reviewSectionDefaults = {
+  eyebrow: 'Reviews',
+  title: 'What learners say about us',
+  description:
+    'We focus on calm instruction, practical confidence, and a supportive experience from the first lesson through to the test.',
+  reviews: [
+    {
+      name: 'Sophie M.',
+      location: 'Automatic lessons',
+      text: 'Patient, friendly and professional from day one. I went from nervous to test-ready much faster than I expected.',
+    },
+    {
+      name: 'Daniel P.',
+      location: 'Intensive course',
+      text: 'The lessons were structured really well and the feedback was always clear. Booking was simple too.',
+    },
+    {
+      name: 'Aisha K.',
+      location: 'Weekly lessons',
+      text: 'I felt supported the whole way through. The instruction was calm, practical, and easy to follow.',
+    },
+    {
+      name: 'Liam T.',
+      location: 'First-time pass',
+      text: 'Great communication and a really encouraging approach. I honestly looked forward to each lesson.',
+    },
+    {
+      name: 'Emma R.',
+      location: 'Refresher lessons',
+      text: 'Everything felt organised and personal. It made getting back into driving feel much less daunting.',
+    },
+    {
+      name: 'Noah S.',
+      location: 'Weekend lessons',
+      text: 'Flexible scheduling was a huge plus, and the lessons themselves were excellent value for money.',
+    },
+  ] as ReviewItem[],
 } as const;
