@@ -15,7 +15,6 @@ import type { SiteIconName } from './Icon.astro';
   };
 
   type Props = {
-    eyebrow?: string | null;
     title?: string | null;
     titleAccent?: string | null;
     description?: string | null;
@@ -27,7 +26,6 @@ import type { SiteIconName } from './Icon.astro';
 
   const props = Astro.props as Props;
 
-  const eyebrow = props.eyebrow === undefined ? heroDefaults.eyebrow : props.eyebrow;
   const title = props.title === undefined ? heroDefaults.title : props.title;
   const titleAccent = props.titleAccent === undefined ? heroDefaults.titleAccent : props.titleAccent;
   const description = props.description === undefined ? heroDefaults.description : props.description;
@@ -39,7 +37,7 @@ import type { SiteIconName } from './Icon.astro';
   const hasCta = Boolean(ctaLabel && ctaHref);
 ---
 
-<section class="relative isolate overflow-hidden bg-white">
+<section class="max-w-6xl mx-auto relative isolate overflow-hidden bg-white">
   <div class:list={["mx-auto grid min-h-[calc(100dvh-4rem)] w-full items-center gap-10 px-4 py-12 sm:px-6 md:gap-8 md:py-16 lg:px-8", hasImage ? 'lg:grid-cols-[560px_1fr]' : 'lg:grid-cols-1']}>
     {hasImage && image && (
       <div class="relative h-56 overflow-hidden rounded-2xl lg:hidden">
@@ -54,11 +52,6 @@ import type { SiteIconName } from './Icon.astro';
       )}
 
     <div class="relative z-10">
-      {eyebrow && (
-        <p class="mb-3 inline-flex items-center py-1 text-xs font-semibold uppercase tracking-[0.5em] text-red-600">
-          {eyebrow}
-        </p>
-      )}
       <h1 class="max-w-[14ch] text-4xl font-bold uppercase tracking-tight text-slate-900 sm:text-5xl lg:text-6xl">
         {title}
         {titleAccent && (
@@ -103,14 +96,13 @@ import type { SiteIconName } from './Icon.astro';
     </div>
 
     {hasImage && image && (
-      <div class="relative hidden h-full min-h-128 lg:block">
+      <div class="absolute right-0 top-1/2 -translate-y-1/2 hidden w-full lg:w-3/4 h-full min-h-128 lg:block">
         <img
           src={image.src}
           alt={image.alt}
-          class="absolute inset-0 h-full w-full rounded-[2.5rem] object-cover"
+          class="absolute inset-0 h-full w-full rounded-[2.5rem] object-contain"
           loading="eager"
         />
-        <div class="absolute inset-0 bg-linear-to-r from-white via-white/70 to-transparent"></div>
       </div>
     )}
   </div>

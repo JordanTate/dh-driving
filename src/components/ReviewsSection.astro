@@ -1,11 +1,14 @@
 ---
 import Carousel from './Carousel.astro';
-import { siteContact } from '../constants/site';
+import { type ReviewItem, siteContact } from '../constants/site';
 
 type Review = {
 	name: string;
-	location: string;
 	text: string;
+	image?: {
+		src: string;
+		alt: string;
+	};
 };
 
 type Props = {
@@ -17,15 +20,14 @@ type Props = {
 
 const { eyebrow, title, description, reviews = [] } = Astro.props as Props;
 
-const reviewPages = reviews?.reduce<Review[][]>((pages, review, index) => {
-	const pageIndex = Math.floor(index / 3);
-	if (!pages[pageIndex]) {
-		pages[pageIndex] = [];
-	}
-
-	pages[pageIndex].push(review);
-	return pages;
-}, []) ?? [];
+// Fallback avatar text for reviews without a photo
+function getInitials(name: string) {
+	return name
+		.split(/\s+/)
+		.slice(0, 2)
+		.map((part) => part.charAt(0).toUpperCase())
+		.join('');
+}
 ---
 
 {Array.isArray(reviews) && reviews.length > 0 && (
@@ -47,26 +49,30 @@ const reviewPages = reviews?.reduce<Review[][]>((pages, review, index) => {
 				</a>
 			</div>
 
-			<div>
+			<div class="min-w-0">
 				<Carousel ariaLabel={title ? `${title} carousel` : 'Reviews carousel'}>
 					{
-						reviewPages.map((page) => (
-							<div class="w-full flex-none snap-start">
-								<div class="grid gap-4 sm:grid-cols-3">
-									{
-										page.map((review) => (
-											<article class="flex h-full flex-col rounded-3xl border border-slate-200 bg-slate-50 p-6 shadow-sm">
-												<div class="text-2xl leading-none text-red-500">“</div>
-												<p class="mt-4 text-sm leading-7 text-slate-600">{review.text}</p>
-												<div class="mt-6">
-													<h3 class="font-semibold text-slate-900">{review.name}</h3>
-													<p class="text-sm text-slate-500">{review.location}</p>
-												</div>
-											</article>
-										))
-									}
+						reviews.map((review) => (
+							<article class="flex w-full h-full shrink-0 snap-start self-start flex-col rounded-3xl border border-slate-200 bg-slate-50 p-6 shadow-sm xl:w-[calc(50%-0.75rem)]">
+								<div class="flex items-center gap-3">
+									{review.image ? (
+										<img
+											src={review.image.src}
+											alt={review.image.alt}
+											class="h-24 w-24 rounded-xl object-cover object-top ring-2 ring-white shadow-sm"
+										/>
+									) : (
+										<div class="flex h-24 w-24 items-center justify-center rounded-full bg-red-100 font-semibold text-red-600">
+											{getInitials(review.name)}
+										</div>
+									)}
+									<h3 class="font-semibold text-slate-900">{review.name}</h3>
 								</div>
-							</div>
+								<div class="mt-4 text-2xl leading-none text-red-500">“</div>
+								<p class="mt-2 max-h-42 overflow-y-auto pr-1 text-sm leading-7 text-slate-600 scrollbar-thin [&::-webkit-scrollbar]:w-1.5 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-slate-300 [&::-webkit-scrollbar-track]:bg-transparent">
+									{review.text}
+								</p>
+							</article>
 						))
 					}
 				</Carousel>

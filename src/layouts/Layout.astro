@@ -15,7 +15,7 @@ import { siteBrand } from '../constants/site';
 		<meta name="generator" content={Astro.generator} />
 		<title>{siteBrand.name}</title>
 	</head>
-	<body class="overflow-x-hidden">
+	<body class="">
 		<Nav />
 		<slot />
 		<Footer />
@@ -27,5 +27,6 @@ import { siteBrand } from '../constants/site';
 	body {
 		margin: 0;
 		width: 100%;
+		overflow-x: hidden;
 	}
 </style>

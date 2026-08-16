@@ -11,6 +11,9 @@ import {
 	Phone,
 	ShieldCheck,
 	Star,
+	FileBadge,
+	CirclePoundSterling,
+	Road
 } from '@lucide/astro';
 
 export type SiteIconName =
@@ -24,7 +27,11 @@ export type SiteIconName =
 	| 'message'
 	| 'phone'
 	| 'shield'
-	| 'star';
+	| 'star'
+	| 'file-badge'
+	| 'circle-pound-sterling'
+	| 'road'
+	;
 
 type Props = {
 	name?: SiteIconName | null;
@@ -50,6 +57,9 @@ const icons = {
 	phone: Phone,
 	shield: ShieldCheck,
 	star: Star,
+	'file-badge': FileBadge,
+	'circle-pound-sterling': CirclePoundSterling,
+	'road': Road,
 } as const;
 
 const IconComponent = name ? icons[name] : null;
