@@ -28,6 +28,12 @@ type ReviewItem = {
   text: string;
 };
 
+type GalleryImage = {
+  src: string;
+  alt: string;
+  aspectClass?: string;
+};
+
 export const siteBrand = {
   name: 'Driving School',
   logoLabel: 'Driving School',
@@ -166,6 +172,34 @@ export const reviewSectionDefaults = {
       text: 'Flexible scheduling was a huge plus, and the lessons themselves were excellent value for money.',
     },
   ] as ReviewItem[],
+} as const;
+
+export const gallerySectionDefaults = {
+  eyebrow: 'Gallery',
+  title: 'See the car you will learn in',
+  description: 'A few photos of our current training car, inside and out.',
+  images: [
+    {
+      src: heroImage.src,
+      alt: 'Training car exterior',
+      aspectClass: 'aspect-[3/4]',
+    },
+    {
+      src: heroImage.src,
+      alt: 'Training car interior',
+      aspectClass: 'aspect-square',
+    },
+    {
+      src: heroImage.src,
+      alt: 'Training car dashboard',
+      aspectClass: 'aspect-[4/5]',
+    },
+    {
+      src: heroImage.src,
+      alt: 'Training car on the road',
+      aspectClass: 'aspect-[3/4]',
+    },
+  ] as GalleryImage[],
 } as const;
 
 export const footerDefaults = {

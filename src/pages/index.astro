@@ -1,15 +1,23 @@
 ---
 import Hero from '../components/Hero.astro';
 import PackagesSection from '../components/PackagesSection.astro';
+import GallerySection from '../components/GallerySection.astro';
 import ReviewsSection from '../components/ReviewsSection.astro';
 import UspStrip from '../components/UspStrip.astro';
 import Layout from '../layouts/Layout.astro';
-import { heroDefaults, packageSectionDefaults, reviewSectionDefaults, uspStripDefaults } from '../constants/site';
+import {
+	heroDefaults,
+	packageSectionDefaults,
+	gallerySectionDefaults,
+	reviewSectionDefaults,
+	uspStripDefaults,
+} from '../constants/site';
 ---
 
 <Layout>
 	<Hero {...heroDefaults} />
 	<PackagesSection {...packageSectionDefaults} />
 	<UspStrip items={uspStripDefaults} />
+	<GallerySection {...gallerySectionDefaults} />
 	<ReviewsSection {...reviewSectionDefaults} />
 </Layout>

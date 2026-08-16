@@ -1,0 +1,47 @@
+---
+type GalleryImage = {
+	src: string;
+	alt: string;
+	aspectClass?: string;
+};
+
+type Props = {
+	eyebrow?: string | null;
+	title?: string | null;
+	description?: string | null;
+	images?: GalleryImage[] | null;
+};
+
+const { eyebrow, title, description, images = [] } = Astro.props as Props;
+---
+
+{Array.isArray(images) && images.length > 0 && (
+	<section class="bg-slate-50 py-16 sm:py-20">
+		<div class="mx-auto w-full max-w-6xl px-4 sm:px-6 lg:px-8">
+			<div class="max-w-2xl">
+				{eyebrow && (
+					<p class="mb-3 text-xs font-semibold uppercase tracking-[0.35em] text-red-600">
+						{eyebrow}
+					</p>
+				)}
+				{title && <h2 class="text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">{title}</h2>}
+				{description && <p class="mt-4 text-base leading-7 text-slate-600 sm:text-lg">{description}</p>}
+			</div>
+
+			<div class="mt-10 columns-1 gap-4 sm:columns-2 lg:columns-3 xl:columns-4">
+				{
+					images.map((image) => (
+						<div class:list={['relative mb-4 break-inside-avoid overflow-hidden rounded-2xl bg-slate-200', image.aspectClass]}>
+							<img
+								src={image.src}
+								alt={image.alt}
+								loading="lazy"
+								class:list={['object-cover', image.aspectClass ? 'absolute inset-0 h-full w-full' : 'h-auto w-full']}
+							/>
+						</div>
+					))
+				}
+			</div>
+		</div>
+	</section>
+)}
