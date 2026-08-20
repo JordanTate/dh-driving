@@ -154,9 +154,9 @@ export const packageSectionDefaults = {
 } as const;
 
 export const uspStripDefaults = [
-  { text: 'Patient, friendly & professional', icon: 'badge-check' },
-  { text: 'Learn in a modern, dual control car', icon: 'badge-check' },
-  { text: 'High first-time pass rate', icon: 'badge-check' },
+  { text: 'Patient, friendly & professional', icon: 'shield' },
+  { text: 'High first-time pass rate', icon: 'star' },
+  { text: 'Learn in a modern, dual control car', icon: 'car-front' },
 ] as UspStripItem[];
 
 export const reviewSectionDefaults = {
