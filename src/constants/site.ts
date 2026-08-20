@@ -166,85 +166,85 @@ export const reviewSectionDefaults = {
     'I focus on practical confidence, and a supportive experience from the first lesson through to the test.',
   reviews: [
     {
-      name: 'Matilda Sealey',
+      name: 'Matilda S',
       text: 'Dave was very patient and tried to make sure I was a confident driver in all types of conditions and on all types of roads, while being very easy to get on with. He made sure I was comfortable with what we were doing in the lesson and pushing me when I needed it.',
       image: {
         src: studentPhotos['../assets/students/Matilda_Sealey.jpeg'].default
           .src,
-        alt: 'Matilda Sealey',
+        alt: 'Matilda S',
       },
     },
     {
-      name: 'Frankie Wileman',
+      name: 'Frankie W',
       text: 'Dave is a great driving instructor, I always felt so relaxed and we had a good laugh during our lesson. He was always patient, friendly and made me feel confident behind the wheel. His clear explanations and calm approach really helped me improve my driving skills. I would highly recommend him to anyone looking for a reliable and supportive driving instructor.',
       image: {
         src: studentPhotos['../assets/students/Frankie_Wileman.jpeg'].default
           .src,
-        alt: 'Frankie Wileman',
+        alt: 'Frankie W',
       },
     },
     {
-      name: 'Leanne Noble-Clarke',
+      name: 'Leanne N',
       text: 'I had bad anxiety about getting behind the wheel, however my lessons with Dave took all the anxiety away. I had a laugh and learnt at the same time. I am so thankful for all he did in helping me to drive, as I then went on to pass my test first time .... Amazing instructor.',
       image: {
         src: studentPhotos['../assets/students/Leanne_Noble-Clarke.jpeg']
           .default.src,
-        alt: 'Leanne Noble-Clarke',
+        alt: 'Leanne N',
       },
     },
     {
-      name: 'Georgia Gutteridge',
+      name: 'Georgia G',
       text: "I honestly couldn't recommend Dave as a driving instructor more! .. I was learning with him for just under 2 years and throughout my journey he was incredible patient, kind and understanding. I struggled with my confidence and had a lot of worries, when it came to driving, be he never made me feel judged or rushed. He always explained things in a way that made sense to me and adapted his teaching method to suit how I leanred best. His calm and supportive approach helped me become a much more confident driver. I'm so grateful for all the patience, support and encouragement he gave me. If you're looking for an instructor who genuinely cares about helping you succeed and builds your confidence every step of the way, I couldn't recommend him more... thank you for everything!",
       image: {
         src: studentPhotos['../assets/students/Georgia_Gutteridge.jpeg'].default
           .src,
-        alt: 'Georgia Gutteridge',
+        alt: 'Georgia G',
       },
     },
     {
-      name: 'Shay Wright',
+      name: 'Shay W',
       text: 'I always felt comfortable on lessons and never got too stressed out, he was very easy to talk to throughout lessons and made learning very straightforward.',
       image: {
         src: studentPhotos['../assets/students/Shay_Wright.jpeg'].default.src,
-        alt: 'Shay Wright',
+        alt: 'Shay W',
       },
     },
     {
-      name: 'Franchesca Horsman',
+      name: 'Franchesca H',
       text: "Dave is an amazing instructor, and when it came to my lessons and passing my test, I couldn't have asked for more..! Throughout my entire driving journey, Dave was always patient, positive and encouraging, even on the days when I felt nervous and anxious. He always managed to make me laugh and made every lesson enjoyable, which really helped build my confidence behind the wheel.",
       image: {
         src: studentPhotos['../assets/students/Franchesca_Horsman.jpeg'].default
           .src,
-        alt: 'Franchesca Horsman',
+        alt: 'Franchesca H',
       },
     },
     {
-      name: 'Dylan Cooper',
+      name: 'Dylan C',
       text: "For helping me pass first time with minimal faults, I couldn't thank Dave enough. His incredible patience and friendly attitude, meant I felt no stress and had full confidence every time I was behind the wheel. Every lesson felt that I had learnt something new each time, and whenever I couldn't come to graps with something, Dave would find new ways to help me overcome any problems I had.",
       image: {
         src: studentPhotos['../assets/students/Dylan_Cooper.jpeg'].default.src,
-        alt: 'Dylan Cooper',
+        alt: 'Dylan C',
       },
     },
     {
-      name: 'Grace Strawbridge',
+      name: 'Grace S',
       text: "Lessons with Dave were not only comfortable, supportive and helpful but also lots of fun! Despite being extremely nervous, Dave made me improve massively and also allowed me to learn to enjoy driving. He's an incredible teacher; I'd recommend Dave to anyone within a heartbeat...!",
     },
     {
-      name: 'Melanie Birtles',
+      name: 'Melanie B',
       text: "My driving experience with Dave was great, I wasn't just having driving lessons, it felt like I was going on a drive with one of my friends. I was always made to feel comforted and supported even when I doubted myself. Dave was very patient and helpful with any problems and fears I had about leaning to drive, his stories and jokes always made you feel at ease. I would highly recommend and felt very privileged to have had him as my instructor. Good luck to all that book with him, you're going to smash it..!",
       image: {
         src: studentPhotos['../assets/students/Melanie_Birtles.jpeg'].default
           .src,
-        alt: 'Melanie Birtles',
+        alt: 'Melanie B',
       },
     },
     {
-      name: 'Corey Parker',
+      name: 'Corey P',
       text: "When I first started lessons, I was very nervous on the road, Dave was incredible at working at my pace and only moving on when I felt I was ready and I was confident to do so. Just a couple of days after I passed, I was confident enough to drive myself to Meadowhall on my own. All thanks to Dave's teaching, he's very professional and highly recommend.",
       image: {
         src: studentPhotos['../assets/students/Corey_Parker.jpeg'].default.src,
-        alt: 'Corey Parker',
+        alt: 'Corey P',
       },
     },
   ] as ReviewItem[],
