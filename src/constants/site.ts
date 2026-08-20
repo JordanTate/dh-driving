@@ -1,5 +1,5 @@
 import logoImage from '../assets/logo.png';
-import heroImage from '../assets/hero.jpg';
+import heroImage from '../assets/IMG_4835.jpeg';
 import footerImage from '../assets/footer.png';
 import type { SiteIconName } from '../components/Icon.astro';
 import galleryImage1 from '../assets/IMG_3421.jpg';
