@@ -19,6 +19,11 @@ type HeroUsp = {
   icon?: SiteIconName;
 };
 
+type HeroTagline = {
+  lines: string[];
+  icon?: SiteIconName;
+};
+
 type PackageCard = {
   icon?: SiteIconName;
   title: string;
@@ -85,6 +90,11 @@ export const heroDefaults = {
     'Professional driving lessons tailored to you across all Doncaster areas.',
   ctaLabel: 'Call to Book a Lesson',
   ctaHref: siteContact.phone.href,
+  sticker: 'LOCAL FRIENDLY TRUSTED',
+  tagline: {
+    lines: ['Learn with Confidence.', 'Drive for Life.'],
+    icon: 'key',
+  } as HeroTagline,
   image: {
     src: heroImage.src,
     alt: 'Driving lesson road view',
