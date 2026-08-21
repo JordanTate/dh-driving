@@ -15,20 +15,131 @@ const { items = [] } = Astro.props as Props;
 ---
 
 {Array.isArray(items) && items.length > 0 && (
-	<section class="bg-white py-12 sm:py-16">
+	<section class="bg-red-600 py-8 sm:py-10">
 		<div class="mx-auto w-full max-w-6xl px-4 sm:px-6 lg:px-8">
-			<ul class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+			<ul class="hidden gap-6 sm:grid sm:grid-cols-3 sm:divide-x sm:divide-white/20">
 				{
 					items.map((item) => (
-						<li class="flex flex-col items-center gap-3 rounded-2xl border border-slate-200 px-6 py-8 text-center shadow-sm transition-transform hover:-translate-y-1">
-							<span class="inline-flex h-16 w-16 shrink-0 items-center justify-center rounded-full bg-red-50 text-red-600">
-								<Icon name={item.icon ?? 'badge-check'} class="h-8 w-8" />
+						<li class="flex items-center justify-center gap-3 text-center sm:justify-start sm:pl-6 sm:text-left sm:first:pl-0">
+							<span class="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-white/15 text-white">
+								<Icon name={item.icon ?? 'badge-check'} class="h-5 w-5 text-amber-300" />
 							</span>
-							<span class="text-base font-semibold leading-snug text-slate-900 sm:text-lg">{item.text}</span>
+							<span class="text-sm font-semibold leading-snug text-white sm:text-base">{item.text}</span>
 						</li>
 					))
 				}
 			</ul>
+
+			<usp-carousel class="block sm:hidden">
+				<ul data-usp-track class="flex snap-x snap-mandatory overflow-x-auto scroll-smooth scrollbar-none [&::-webkit-scrollbar]:hidden">
+					{
+						items.map((item) => (
+							<li class="flex w-full shrink-0 snap-center items-center justify-center gap-3 text-center">
+								<span class="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-white/15 text-white">
+									<Icon name={item.icon ?? 'badge-check'} class="h-5 w-5 text-amber-300" />
+								</span>
+								<span class="text-sm font-semibold leading-snug text-white">{item.text}</span>
+							</li>
+						))
+					}
+				</ul>
+				{items.length > 1 && (
+					<div data-usp-dots class="mt-5 flex items-center justify-center gap-2">
+						{items.map((_, i) => (
+							<span data-usp-dot class:list={["h-1.5 w-1.5 rounded-full transition-colors", i === 0 ? "bg-white" : "bg-white/30"]}></span>
+						))}
+					</div>
+				)}
+			</usp-carousel>
 		</div>
 	</section>
 )}
+
+<script>
+	class UspCarousel extends HTMLElement {
+		track: HTMLElement | null = null;
+		dots: HTMLElement[] = [];
+		timer: ReturnType<typeof setInterval> | null = null;
+		resumeTimeout: ReturnType<typeof setTimeout> | null = null;
+		index = 0;
+
+		connectedCallback() {
+			this.track = this.querySelector('[data-usp-track]');
+			this.dots = Array.from(this.querySelectorAll('[data-usp-dot]'));
+
+			if (!this.track) {
+				return;
+			}
+
+			this.track.addEventListener('scroll', () => this.handleScroll(), { passive: true });
+			this.track.addEventListener('pointerdown', () => this.pause());
+			this.track.addEventListener('touchstart', () => this.pause(), { passive: true });
+			document.addEventListener('visibilitychange', () => (document.hidden ? this.stop() : this.resume()));
+
+			this.resume();
+		}
+
+		disconnectedCallback() {
+			this.stop();
+			if (this.resumeTimeout) {
+				clearTimeout(this.resumeTimeout);
+			}
+		}
+
+		prefersReducedMotion() {
+			return window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+		}
+
+		resume() {
+			if (this.prefersReducedMotion() || document.hidden) {
+				return;
+			}
+			this.stop();
+			this.timer = setInterval(() => this.advance(), 3500);
+		}
+
+		stop() {
+			if (this.timer) {
+				clearInterval(this.timer);
+				this.timer = null;
+			}
+		}
+
+		// Pause autoplay while the user is touching/dragging, then resume shortly after.
+		pause() {
+			this.stop();
+			if (this.resumeTimeout) {
+				clearTimeout(this.resumeTimeout);
+			}
+			this.resumeTimeout = setTimeout(() => this.resume(), 4000);
+		}
+
+		advance() {
+			if (!this.track || this.track.clientWidth === 0) {
+				return;
+			}
+			const count = this.track.children.length;
+			this.index = (this.index + 1) % count;
+			this.track.scrollTo({ left: this.index * this.track.clientWidth, behavior: 'smooth' });
+		}
+
+		handleScroll() {
+			if (!this.track || this.track.clientWidth === 0) {
+				return;
+			}
+			this.index = Math.round(this.track.scrollLeft / this.track.clientWidth);
+			this.updateDots();
+		}
+
+		updateDots() {
+			this.dots.forEach((dot, i) => {
+				dot.classList.toggle('bg-white', i === this.index);
+				dot.classList.toggle('bg-white/30', i !== this.index);
+			});
+		}
+	}
+
+	if (!customElements.get('usp-carousel')) {
+		customElements.define('usp-carousel', UspCarousel);
+	}
+</script>
