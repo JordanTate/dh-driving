@@ -1,5 +1,5 @@
 ---
-import Icon from './Icon.astro';
+import PackageCard from './PackageCard.astro';
 import type { SiteIconName } from './Icon.astro';
 
 type PackageCard = {
@@ -28,8 +28,10 @@ const {
 ---
 
 {Array.isArray(packages) && packages.length > 0 && (
-	<section class="bg-slate-50 py-16 sm:py-20">
-		<div class="mx-auto w-full max-w-6xl px-4 sm:px-6 lg:px-8">
+	<section class="relative overflow-hidden bg-slate-50 py-16 sm:py-20">
+		<div class="pointer-events-none absolute top-0 right-0 h-80 w-80 -translate-y-1/3 translate-x-1/3 rounded-full bg-red-200/40 blur-3xl" aria-hidden="true"></div>
+
+		<div class="relative mx-auto w-full max-w-6xl px-4 sm:px-6 lg:px-8">
 			<div class="max-w-2xl">
 				{eyebrow && (
 					<p class="mb-3 text-xs font-semibold uppercase tracking-[0.35em] text-red-600">
@@ -40,53 +42,88 @@ const {
 				{description && <p class="mt-4 text-base leading-7 text-slate-600 sm:text-lg">{description}</p>}
 			</div>
 
-			<div class="mt-10 grid gap-6 md:grid-cols-2 xl:grid-cols-4">
-				{
-					packages.map((pkg) => {
-						const hasCta = Boolean(pkg.ctaLabel && pkg.ctaHref);
-
-						return (
-							<article class:list={[
-								'relative flex h-full flex-col justify-between rounded-3xl border bg-white p-6 shadow-sm transition',
-								pkg.featured
-									? 'border-red-500 shadow-red-100/80 ring-1 ring-red-200'
-									: 'border-slate-200 hover:border-slate-300',
-							]}>
-
-								{pkg.featured && (
-									<span class="absolute right-5 top-5 rounded-full bg-red-600 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.2em] text-white">
-										Most Popular
-									</span>
-								)}
-
-                <div>
-                  <div class="inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-red-50 text-red-600">
-                    <Icon name={pkg.icon ?? 'badge-check'} class="h-6 w-6" />
-                  </div>
-
-                  <h3 class="mt-6 text-xl font-semibold text-slate-900">{pkg.title}</h3>
-                  <p class="mt-3 text-3xl font-bold tracking-tight text-slate-900">{pkg.price}</p>
-                  {pkg.detail && <p class="mt-3 text-sm leading-6 text-slate-600">{pkg.detail}</p>}
-                </div>
-
-								{hasCta && (
-									<a
-										href={pkg.ctaHref as string}
-										class:list={[
-											'mt-6 flex items-center justify-center rounded-lg border px-5 py-3 text-sm font-semibold transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-500 focus-visible:ring-offset-2',
-											pkg.featured
-												? 'border-red-600 bg-red-600 text-white hover:bg-red-700'
-												: 'border-slate-300 text-slate-900 hover:border-red-400 hover:text-red-600',
-										]}
-									>
-										{pkg.ctaLabel}
-									</a>
-								)}
-							</article>
-						);
-					})
-				}
+			<div class="mt-10 hidden gap-6 md:grid md:grid-cols-2 xl:grid-cols-4">
+				{packages.map((pkg) => <PackageCard pkg={pkg} />)}
 			</div>
+
+			<package-carousel class="mt-10 block md:hidden">
+				<ul data-package-track class="-mx-4 flex snap-x snap-mandatory overflow-x-auto scroll-smooth px-4 pt-2 pb-4 scrollbar-none [&::-webkit-scrollbar]:hidden">
+					{
+						packages.map((pkg, i) => (
+							<li data-package-item class:list={['relative w-[82%] shrink-0 snap-center snap-always', i > 0 && '-ml-6', i === 0 ? 'z-10' : 'z-0']}>
+								<PackageCard pkg={pkg} />
+							</li>
+						))
+					}
+				</ul>
+				{packages.length > 1 && (
+					<div data-package-dots class="mt-2 flex items-center justify-center gap-2">
+						{packages.map((_, i) => (
+							<span data-package-dot class:list={['h-1.5 w-1.5 rounded-full transition-colors', i === 0 ? 'bg-red-600' : 'bg-slate-300']} />
+						))}
+					</div>
+				)}
+			</package-carousel>
 		</div>
 	</section>
 )}
+
+<script>
+	class PackageCarousel extends HTMLElement {
+		track: HTMLElement | null = null;
+		dots: HTMLElement[] = [];
+		items: HTMLElement[] = [];
+
+		connectedCallback() {
+			this.track = this.querySelector('[data-package-track]');
+			this.dots = Array.from(this.querySelectorAll('[data-package-dot]'));
+			this.items = Array.from(this.querySelectorAll('[data-package-item]'));
+
+			if (!this.track) {
+				return;
+			}
+
+			this.track.addEventListener('scroll', () => this.handleScroll(), { passive: true });
+		}
+
+		handleScroll() {
+			if (!this.track) {
+				return;
+			}
+
+			const scrollLeft = this.track.scrollLeft;
+
+			let closest = 0;
+			let minDistance = Infinity;
+			this.items.forEach((item, i) => {
+				const distance = Math.abs(item.offsetLeft - scrollLeft);
+				if (distance < minDistance) {
+					minDistance = distance;
+					closest = i;
+				}
+			});
+
+			this.updateDots(closest);
+			this.updateActiveCard(closest);
+		}
+
+		// Keep the centered card above its overlapping neighbours regardless of DOM order.
+		updateActiveCard(index: number) {
+			this.items.forEach((item, i) => {
+				item.classList.toggle('z-10', i === index);
+				item.classList.toggle('z-0', i !== index);
+			});
+		}
+
+		updateDots(index: number) {
+			this.dots.forEach((dot, i) => {
+				dot.classList.toggle('bg-red-600', i === index);
+				dot.classList.toggle('bg-slate-300', i !== index);
+			});
+		}
+	}
+
+	if (!customElements.get('package-carousel')) {
+		customElements.define('package-carousel', PackageCarousel);
+	}
+</script>
