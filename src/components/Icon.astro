@@ -14,7 +14,8 @@ import {
 	Star,
 	FileBadge,
 	CirclePoundSterling,
-	Road
+	Road,
+	KeyRound
 } from '@lucide/astro';
 
 export type SiteIconName =
@@ -33,6 +34,7 @@ export type SiteIconName =
 	| 'file-badge'
 	| 'circle-pound-sterling'
 	| 'road'
+	| 'key'
 	;
 
 type Props = {
@@ -63,6 +65,7 @@ const icons = {
 	'file-badge': FileBadge,
 	'circle-pound-sterling': CirclePoundSterling,
 	'road': Road,
+	key: KeyRound,
 } as const;
 
 const IconComponent = name ? icons[name] : null;
