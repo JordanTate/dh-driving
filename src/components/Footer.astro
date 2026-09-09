@@ -16,6 +16,8 @@ type Props = {
 	callHref?: string | null;
 	whatsappLabel?: string | null;
 	whatsappHref?: string | null;
+	facebookLabel?: string | null;
+	facebookHref?: string | null;
 	image?: FooterImage | null;
 };
 
@@ -27,11 +29,14 @@ const {
 	callHref = footerDefaults.callHref,
 	whatsappLabel = footerDefaults.whatsappLabel,
 	whatsappHref = footerDefaults.whatsappHref,
+	facebookLabel = footerDefaults.facebookLabel,
+	facebookHref = footerDefaults.facebookHref,
 	image = footerDefaults.image,
 } = Astro.props as Props;
 
 const hasCall = Boolean(callLabel && callHref);
 const hasWhatsapp = Boolean(whatsappLabel && whatsappHref);
+const hasFacebook = Boolean(facebookLabel && facebookHref);
 const year = new Date().getFullYear();
 ---
 
@@ -69,6 +74,19 @@ const year = new Date().getFullYear();
 						>
 							<Icon name="message" class="h-4 w-4" />
 							{whatsappLabel}
+						</a>
+					)}
+					{hasFacebook && (
+						<a
+							href={facebookHref as string}
+							target="_blank"
+							rel="noopener noreferrer"
+							class="inline-flex items-center gap-2 rounded-full border border-white px-5 py-3 text-sm font-semibold text-white transition hover:bg-white hover:text-red-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-red-500"
+						>
+							<svg viewBox="0 0 24 24" aria-hidden="true" class="h-4 w-4 fill-current">
+								<path d="M13.5 21v-8h2.75l.41-3H13.5V8.08c0-.87.24-1.46 1.5-1.46h1.78V3.94c-.31-.04-1.37-.13-2.6-.13-2.57 0-4.33 1.57-4.33 4.45V10H7v3h2.85v8h3.65Z" />
+							</svg>
+							{facebookLabel}
 						</a>
 					)}
 				</div>

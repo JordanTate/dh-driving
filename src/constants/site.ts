@@ -76,6 +76,10 @@ export const siteContact = {
     label: 'Text on WhatsApp',
     href: '',
   },
+  facebook: {
+    label: 'Facebook',
+    href: '',
+  },
 } as const;
 
 export const siteNavigation = [
@@ -307,5 +311,7 @@ export const footerDefaults = {
   callHref: siteContact.phone.href,
   whatsappLabel: siteContact.whatsapp.label,
   whatsappHref: siteContact.whatsapp.href,
+  facebookLabel: siteContact.facebook.label,
+  facebookHref: siteContact.facebook.href,
   image: { src: footerImage.src, alt: 'DH Driving School' },
 } as const;
