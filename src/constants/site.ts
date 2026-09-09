@@ -66,7 +66,7 @@ export const siteBrand = {
 export const siteContact = {
   phone: {
     label: '0747 149 5093',
-    href: 'tel:+477471495093',
+    href: 'tel:+447471495093',
   },
   email: {
     label: 'hello@drivingschool.com',
@@ -92,7 +92,7 @@ export const heroDefaults = {
   titleAccent: 'Confident Tomorrow',
   description:
     'Professional driving lessons tailored to you across all Doncaster areas.',
-  ctaLabel: 'Call to Book a Lesson',
+  ctaLabel: 'Call 0747 149 5093',
   ctaHref: siteContact.phone.href,
   sticker: 'LOCAL FRIENDLY TRUSTED',
   tagline: {
@@ -133,7 +133,7 @@ export const packageSectionDefaults = {
       title: 'Beginners First',
       price: '£55',
       detail:
-        'Taster lessons for complete beginners, focusing on building confidence and basic skills.',
+        '2 Hour lesson for complete beginners, focusing on building confidence and basic skills.',
       ctaLabel: 'Call Now',
       ctaHref: siteContact.phone.href,
       featured: false,
@@ -307,7 +307,7 @@ export const footerDefaults = {
   title: 'Ready to get started?',
   subtitle: 'Book your first lesson today.',
   text: "Available for all Doncaster areas from Armthorpe, Sprotbrough, Edlington, Warmsworth, Balby, Conisbrough and more. Reach out by phone to confirm your area and let's find a lesson slot that fits your schedule.",
-  callLabel: 'Call Now',
+  callLabel: 'Call 0747 149 5093',
   callHref: siteContact.phone.href,
   whatsappLabel: siteContact.whatsapp.label,
   whatsappHref: siteContact.whatsapp.href,
