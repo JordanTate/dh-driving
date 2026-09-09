@@ -1,5 +1,6 @@
 ---
 import Hero from '../components/Hero.astro';
+import AboutSection from '../components/AboutSection.astro';
 import PackagesSection from '../components/PackagesSection.astro';
 import GallerySection from '../components/GallerySection.astro';
 import ReviewsSection from '../components/ReviewsSection.astro';
@@ -18,6 +19,7 @@ import {
 	<Hero {...heroDefaults} />
 	<PackagesSection {...packageSectionDefaults} />
 	<UspStrip items={uspStripDefaults} />
+	<AboutSection />
 	<GallerySection {...gallerySectionDefaults} />
 	<ReviewsSection {...reviewSectionDefaults} />
 </Layout>
